@@ -93,10 +93,10 @@ def build_test_data(weather_station_names, num_rows_to_create):
     station_names_10k_max = random.choices(weather_station_names, k=10_000)
     batch_size = 10000 # instead of writing line by line to file, process a batch of stations and put it to disk
     progress_step = max(1, (num_rows_to_create // batch_size) // 100)
-    print('Criando o arquivo... isso vai demorar uns 10 minutos...')
+    print(f'Criando o arquivo com {num_rows_to_create} linhas...')
 
     try:
-        with open("./data/measurements.txt", 'w', encoding="utf-8") as file:
+        with open(f"./data/measurements_{num_rows_to_create}.txt", 'w', encoding="utf-8") as file:
             for s in range(0,num_rows_to_create // batch_size):
                 
                 batch = random.choices(station_names_10k_max, k=batch_size)
@@ -111,26 +111,27 @@ def build_test_data(weather_station_names, num_rows_to_create):
     
     end_time = time.time()
     elapsed_time = end_time - start_time
-    file_size = os.path.getsize("./data/measurements.txt")
+    file_size = os.path.getsize(f"./data/measurements_{num_rows_to_create}.txt")
     human_file_size = convert_bytes(file_size)
  
-    print("Arquivo escrito com sucesso data/measurements.txt")
+    print("Arquivo escrito com sucesso")
     print(f"Tamanho final:  {human_file_size}")
-    print(f"Tempo decorrido: {format_elapsed_time(elapsed_time)}")
+    print(f"Tempo decorrido: {format_elapsed_time(elapsed_time)}", "\n")
 
 
-def main():
+def main(num_rows_to_create=100000):
     """
     main program function
     """
-    num_rows_to_create = 1000000
+    num_rows_to_create = num_rows_to_create
     weather_station_names = []
     weather_station_names = build_weather_station_name_list()
     print(estimate_file_size(weather_station_names, num_rows_to_create))
     build_test_data(weather_station_names, num_rows_to_create)
-    print("Arquivo de teste finalizado.")
+    print("Arquivo de teste finalizado.", "\n")
+    print("-------------------------------------")
 
 
 if __name__ == "__main__":
     main()
-exit()
+    exit()
