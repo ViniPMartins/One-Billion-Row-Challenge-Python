@@ -1,6 +1,7 @@
 from src.create_measurements import main
 
 def create_files():
+    
     initial_size = 1000
     multiplications_value = 10
     max_size = 1_000_000_000
